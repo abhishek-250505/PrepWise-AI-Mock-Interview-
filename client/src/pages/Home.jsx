@@ -10,13 +10,13 @@ import {
 import { FaComments, FaUserTie } from 'react-icons/fa'
 import { GiBrain } from 'react-icons/gi'
 
-function Home({ onShowAuth }) {
+function Home() {
   const { userData } = useSelector((state) => state.user)
   const navigate = useNavigate()
 
   const requireAuth = (path) => {
     if (!userData) {
-      onShowAuth()
+      navigate('/auth')
       return
     }
     navigate(path)

@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useRef, useState } from 
 
 const ToastContext = createContext(null)
 
+// Toast hook - exported separately for use in components
 export const useToast = () => {
   const context = useContext(ToastContext)
 
@@ -61,7 +62,7 @@ function ToastProvider({ children }) {
     <ToastContext.Provider value={{ showToast, confirmToast }}>
       {children}
 
-      <div className='fixed right-4 top-4 z-[10000] flex w-[calc(100vw-2rem)] max-w-sm flex-col gap-3'>
+      <div className='fixed right-4 top-4 z-10000 flex w-[calc(100vw-2rem)] max-w-sm flex-col gap-3'>
         {toasts.map((toast) => (
           <div
             key={toast.id}

@@ -1,6 +1,7 @@
 import React from 'react'
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import { buildStyles, CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -9,6 +10,7 @@ import jsPDF from "jspdf"
 import autoTable from "jspdf-autotable"
 
 function Step3Report({ report }) {
+  const navigate = useNavigate()
   if (!report) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -16,7 +18,6 @@ function Step3Report({ report }) {
       </div>
     );
   }
-  const navigate = useNavigate()
   const {
     finalScore = 0,
     confidence = 0,
@@ -137,35 +138,39 @@ function Step3Report({ report }) {
 
   // ================= QUESTION TABLE =================
   autoTable(doc, {
-  startY: currentY,
-  margin: { left: margin, right: margin },
-  head: [["#", "Question", "Score", "Feedback"]],
-  body: questionWiseScore.map((q, i) => [
-    `${i + 1}`,
-    q.question,
-    `${q.score}/10`,
-    q.feedback,
-  ]),
-  styles: {
-    fontSize: 9,
-    cellPadding: 5,
-    valign: "top",
-  },
-  headStyles: {
-    fillColor: [34, 197, 94],
-    textColor: 255,
-    halign: "center",
-  },
-  columnStyles: {
-    0: { cellWidth: 10, halign: "center" }, // index
-    1: { cellWidth: 55 }, // question
-    2: { cellWidth: 20, halign: "center" }, // score
-    3: { cellWidth: "auto" }, // feedback
-  },
-  alternateRowStyles: {
-    fillColor: [249, 250, 251],
-  },
-});
+    startY: currentY,
+    margin: { left: margin, right: margin },
+    head: [["#", "Question", "Your Answer", "Time (s)", "Score", "Feedback"]],
+    body: questionWiseScore.map((q, i) => [
+      `${i + 1}`,
+      q.question,
+      q.answer || "No answer",
+      `${q.timeTaken || 0}`,
+      `${q.score}/10`,
+      q.feedback,
+    ]),
+    styles: {
+      fontSize: 8,
+      cellPadding: 5,
+      valign: "top",
+    },
+    headStyles: {
+      fillColor: [34, 197, 94],
+      textColor: 255,
+      halign: "center",
+    },
+    columnStyles: {
+      0: { cellWidth: 10, halign: "center" },
+      1: { cellWidth: 55 },
+      2: { cellWidth: 60 },
+      3: { cellWidth: 18, halign: "center" },
+      4: { cellWidth: 18, halign: "center" },
+      5: { cellWidth: "auto" },
+    },
+    alternateRowStyles: {
+      fillColor: [249, 250, 251],
+    },
+  });
 
 
   doc.save("AI_Interview_Report.pdf");
@@ -316,33 +321,47 @@ function Step3Report({ report }) {
                 <div key={i} className='bg-gray-50 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200'>
 
                   <div className='flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4'>
-                    <div>
-                      <p className="text-xs text-gray-400">
-                        Question {i + 1}
-                      </p>
+              <div>
+                <p className="text-xs text-gray-400">
+                  Question {i + 1}
+                </p>
 
-                      <p className="font-semibold text-gray-800 text-sm sm:text-base leading-relaxed">
-                        {q.question || "Question not available"}
-                      </p>
-                    </div>
+                <p className="font-semibold text-gray-800 text-sm sm:text-base leading-relaxed">
+                  {q.question || "Question not available"}
+                </p>
+              </div>
 
+              <div className='bg-green-100 text-green-600 px-3 py-1 rounded-full font-bold text-xs sm:text-sm w-fit'>
+                {q.score ?? 0}/10
+              </div>
+            </div>
 
-                    <div className='bg-green-100 text-green-600 px-3 py-1 rounded-full font-bold text-xs sm:text-sm w-fit'>
-                      {q.score ?? 0}/10
-                    </div>
-                  </div>
+            <div className='grid gap-3 sm:grid-cols-2 mb-4'>
+              <div className='rounded-xl border border-gray-200 bg-gray-50 p-4'>
+                <p className='text-xs text-gray-500 mb-2'>Your Answer</p>
+                <p className='text-sm text-gray-700 leading-relaxed'>
+                  {q.answer?.trim() ? q.answer : "No answer submitted."}
+                </p>
+              </div>
 
-                  <div className='bg-green-50 border border-green-200 p-4 rounded-lg'>
-                    <p className='text-xs text-green-600 font-semibold mb-1'>
-                      AI Feedback
-                    </p>
-                    <p className='text-sm text-gray-700 leading-relaxed'>
+              <div className='rounded-xl border border-gray-200 bg-gray-50 p-4'>
+                <p className='text-xs text-gray-500 mb-2'>Time Taken</p>
+                <p className='text-sm text-gray-700 font-semibold'>
+                  {q.timeTaken != null ? `${q.timeTaken}s` : "N/A"}
+                </p>
+              </div>
+            </div>
 
-                      {q.feedback && q.feedback.trim() !== ""
-                        ? q.feedback
-                        : "No feedback available for this question."}
-                    </p>
-                  </div>
+            <div className='bg-green-50 border border-green-200 p-4 rounded-lg'>
+              <p className='text-xs text-green-600 font-semibold mb-1'>
+                AI Feedback
+              </p>
+              <p className='text-sm text-gray-700 leading-relaxed'>
+                {q.feedback && q.feedback.trim() !== ""
+                  ? q.feedback
+                  : "No feedback available for this question."}
+              </p>
+            </div>
 
                 </div>
               ))}

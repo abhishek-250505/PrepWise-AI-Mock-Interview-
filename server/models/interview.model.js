@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const questionsSchema = new mongoose.Schema({
-     question: String,
+  question: String,
   difficulty: String,
   timeLimit: Number,
   answer: String,
@@ -9,8 +9,9 @@ const questionsSchema = new mongoose.Schema({
   feedback: String,
   score: { type: Number, default: 0 },
   confidence: { type: Number, default: 0 },
-communication: { type: Number, default: 0 },
-correctness: { type: Number, default: 0 },
+  communication: { type: Number, default: 0 },
+  correctness: { type: Number, default: 0 },
+  timeTaken: { type: Number, default: 0 },
 })
 
 

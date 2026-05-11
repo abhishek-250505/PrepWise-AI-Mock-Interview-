@@ -4,14 +4,14 @@ import Step1SetUp from '../components/Step1SetUp'
 import Step2Interview from '../components/Step2Interview'
 import Step3Report from '../components/Step3Report'
 
-function InterviewPage({ onShowAuth, initialMode = "Technical" }) {
+function InterviewPage({ initialMode = "Technical" }) {
     const [step,setStep] = useState(1)
     const [interviewData,setInterviewData] = useState(null)
 
   return (
     <div>
         {step===1 && (
-            <Step1SetUp initialMode={initialMode} onShowAuth={onShowAuth} onStart={(data)=>{
+            <Step1SetUp initialMode={initialMode} onStart={(data)=>{
                 setInterviewData(data);
             setStep(2)}}/>
         )}

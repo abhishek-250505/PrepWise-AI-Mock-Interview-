@@ -23,7 +23,7 @@ const saveRecentQuestions = (newQuestions) => {
   localStorage.setItem(RECENT_APTITUDE_KEY, JSON.stringify(unique));
 };
 
-const AptitudePage = ({ onShowAuth }) => {
+const AptitudePage = () => {
   const navigate = useNavigate();
   const { confirmToast } = useToast();
   const { userData } = useSelector((state) => state.user);
@@ -39,7 +39,7 @@ const AptitudePage = ({ onShowAuth }) => {
   const loadQuestions = async () => {
     if (!userData) {
       setLoading(false);
-      onShowAuth?.();
+      navigate('/auth');
       return;
     }
 
@@ -74,7 +74,7 @@ const AptitudePage = ({ onShowAuth }) => {
   useEffect(() => {
     if (!userData) {
       setLoading(false);
-      onShowAuth?.();
+      navigate('/auth');
       return;
     }
 
@@ -145,7 +145,7 @@ const AptitudePage = ({ onShowAuth }) => {
           <h1 className='text-3xl font-bold mb-4'>Login Required</h1>
           <p className='text-gray-600 mb-6'>Please login to access the aptitude test.</p>
           <button
-            onClick={onShowAuth}
+            onClick={() => navigate('/auth')}
             className='px-6 py-3 bg-gradient-primary text-white rounded-lg font-semibold hover:shadow-soft transition-all'
           >
             Login to Continue

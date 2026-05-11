@@ -261,6 +261,7 @@ export const submitAnswer = async (req, res) => {
       question.feedback = "You did not submit an answer.";
       question.answer = "";
       question.idealAnswer = "A strong answer should give a clear example, explain your actions, and show what you learned.";
+      question.timeTaken = timeTaken || 0;
 
       await interview.save();
 
@@ -276,6 +277,7 @@ export const submitAnswer = async (req, res) => {
       question.feedback = "Time limit exceeded. Answer not evaluated.";
       question.answer = answer;
       question.idealAnswer = "A strong answer should be concise, structured, and focused on the specific situation asked in the question.";
+      question.timeTaken = timeTaken;
 
       await interview.save();
 
@@ -355,6 +357,7 @@ Answer: ${answer}
     const parsed = JSON.parse(aiResponse);
 
     question.answer = answer;
+    question.timeTaken = timeTaken || 0;
     question.confidence = parsed.confidence;
     question.communication = parsed.communication;
     question.correctness = parsed.correctness;
@@ -419,18 +422,20 @@ export const finishInterview = async (req,res) => {
     await interview.save();
 
     return res.status(200).json({
-       finalScore: Number(finalScore.toFixed(1)),
+      finalScore: Number(finalScore.toFixed(1)),
       confidence: Number(avgConfidence.toFixed(1)),
       communication: Number(avgCommunication.toFixed(1)),
       correctness: Number(avgCorrectness.toFixed(1)),
       questionWiseScore: interview.questions.map((q) => ({
         question: q.question,
+        answer: q.answer || "",
         score: q.score || 0,
         feedback: q.feedback || "",
         idealAnswer: q.idealAnswer || "",
         confidence: q.confidence || 0,
         communication: q.communication || 0,
         correctness: q.correctness || 0,
+        timeTaken: q.timeTaken || 0,
       })),
     })
   } catch (error) {
@@ -509,7 +514,17 @@ export const getInterviewReport = async (req,res) => {
       confidence: Number(avgConfidence.toFixed(1)),
       communication: Number(avgCommunication.toFixed(1)),
       correctness: Number(avgCorrectness.toFixed(1)),
-      questionWiseScore: interview.questions
+      questionWiseScore: interview.questions.map((q) => ({
+        question: q.question,
+        answer: q.answer || "",
+        score: q.score || 0,
+        feedback: q.feedback || "",
+        idealAnswer: q.idealAnswer || "",
+        confidence: q.confidence || 0,
+        communication: q.communication || 0,
+        correctness: q.correctness || 0,
+        timeTaken: q.timeTaken || 0,
+      })),
     });
 
   } catch (error) {

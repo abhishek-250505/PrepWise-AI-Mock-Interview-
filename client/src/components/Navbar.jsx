@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ServerUrl } from "../App";
 import { setUserData } from "../redux/userSlice";
-function Navbar({ onShowAuth }) {
+function Navbar() {
   const { userData } = useSelector((state) => state.user);
   const [showCreditPopup, setShowCreditPopup] = useState(false);
   const [showUserPopup, setShowUserPopup] = useState(false);
@@ -31,7 +31,7 @@ function Navbar({ onShowAuth }) {
     }
   };
   return (
-    <div className="sticky top-0 z-[120] bg-white glassmorphism border-b border-gray-200 px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center">
+    <div className="sticky top-0 z-120 bg-white glassmorphism border-b border-gray-200 px-4 py-3 sm:px-6 sm:py-4 flex justify-between items-center">
       <div className="flex items-center gap-3">
         <h1 className="text-lg sm:text-xl font-semibold text-slate-900">PrepWise AI</h1>
       </div>
@@ -41,7 +41,7 @@ function Navbar({ onShowAuth }) {
           <button
             onClick={() => {
               if (!userData) {
-                onShowAuth();
+                navigate('/auth');
                 return;
               }
               setShowCreditPopup(!showCreditPopup);
@@ -56,7 +56,7 @@ function Navbar({ onShowAuth }) {
 
           {showCreditPopup && (
             <div
-              className="absolute right-0 mt-3 w-64 max-w-[calc(100vw-2rem)] rounded-xl border border-gray-200 bg-white p-5 shadow-xl z-[130]"
+              className="absolute right-0 mt-3 w-64 max-w-[calc(100vw-2rem)] rounded-xl border border-gray-200 bg-white p-5 shadow-xl z-130"
             >
               <p className="text-sm text-gray-600 mb-4">
                 Need more credits to continue interviews?
@@ -75,7 +75,7 @@ function Navbar({ onShowAuth }) {
           <button
             onClick={() => {
               if (!userData) {
-                onShowAuth();
+                navigate('/auth');
                 return;
               }
               setShowUserPopup(!showUserPopup);
@@ -92,7 +92,7 @@ function Navbar({ onShowAuth }) {
 
           {showUserPopup && (
             <div
-              className="absolute right-0 mt-3 w-56 max-w-[calc(100vw-2rem)] rounded-xl border border-gray-200 bg-white p-4 shadow-xl z-[130]"
+              className="absolute right-0 mt-3 w-56 max-w-[calc(100vw-2rem)] rounded-xl border border-gray-200 bg-white p-4 shadow-xl z-130"
             >
               <p className="mb-3 border-b border-gray-100 pb-3 text-sm font-bold text-primary-500">
                 {userData?.name}

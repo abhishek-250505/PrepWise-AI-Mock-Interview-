@@ -2,6 +2,7 @@ import React from 'react'
 import maleVideo from "../assets/videos/male-ai.mp4"
 import femaleVideo from "../assets/videos/female-ai.mp4"
 import Timer from './Timer'
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa";
 import { useState } from 'react'
@@ -222,11 +223,9 @@ function Step2Interview({ interviewData, onFinish }) {
 
     runIntro()
 
-
   }, [selectedVoice, isIntroPhase, currentIndex])
 
-
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (hasLeftRef.current) return;
     if (isIntroPhase) return;
@@ -247,6 +246,7 @@ function Step2Interview({ interviewData, onFinish }) {
 
   }, [isIntroPhase, currentIndex])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
   if (hasLeftRef.current) return;
   if (!isIntroPhase && currentQuestion) {
@@ -254,7 +254,7 @@ function Step2Interview({ interviewData, onFinish }) {
   }
 }, [currentIndex]);
 
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!("webkitSpeechRecognition" in window)) return;
 
@@ -281,7 +281,9 @@ function Step2Interview({ interviewData, onFinish }) {
     if (recognitionRef.current && !isAIPlaying) {
       try {
         recognitionRef.current.start();
-      } catch { }
+      } catch {
+        // Ignore speech synthesis errors
+      }
     }
   };
 
@@ -385,8 +387,8 @@ setIsSubmitting(false)
     }
   }
 
-
-   useEffect(() => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
     if (hasLeftRef.current) return;
     if (isIntroPhase) return;
     if (!currentQuestion) return;
@@ -520,7 +522,7 @@ setIsSubmitting(false)
             onClick={submitAnswer}
             disabled={isSubmitting}
               whileTap={{ scale: 0.95 }}
-              className='flex-1 bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90 transition font-semibold disabled:bg-gray-500'>
+              className='flex-1 bg-linear-to-r from-emerald-600 to-teal-500 text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90 transition font-semibold disabled:bg-gray-500'>
               {isSubmitting?"Submitting...":"Submit Answer"}
 
             </motion.button>
@@ -541,7 +543,7 @@ setIsSubmitting(false)
               <button
               onClick={handleNext}
 
-               className='w-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white py-3 rounded-xl shadow-md hover:opacity-90 transition flex items-center justify-center gap-1'>
+               className='w-full bg-linear-to-r from-emerald-600 to-teal-500 text-white py-3 rounded-xl shadow-md hover:opacity-90 transition flex items-center justify-center gap-1'>
                 Next Question <BsArrowRight size={18}/>
               </button>
 

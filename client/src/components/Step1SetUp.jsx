@@ -1,4 +1,5 @@
 import React from 'react'
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react"
 import {
     FaUserTie,
@@ -8,11 +9,13 @@ import {
     FaChartLine,
 } from "react-icons/fa";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import { ServerUrl } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
-function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
+function Step1SetUp({ onStart, initialMode = "Technical" }) {
+  const navigate = useNavigate();
     const {userData}= useSelector((state)=>state.user)
     const dispatch = useDispatch()
     const [role, setRole] = useState("");
@@ -32,7 +35,7 @@ function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
         if (!resumeFile || analyzing) return;
         if (!userData) {
             setError("Please login before uploading your resume.");
-            onShowAuth?.();
+            navigate('/auth');
             return;
         }
         setError("");
@@ -61,7 +64,7 @@ function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
                 localStorage.removeItem("prepwise-auth");
                 dispatch(setUserData(null));
                 setError("Your session expired. Please login again.");
-                onShowAuth?.();
+                navigate('/auth');
             } else {
                 setError(error.response?.data?.message || "Resume analysis failed. Please try again.");
             }
@@ -72,7 +75,7 @@ function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
     const handleStart = async () => {
         if (!userData) {
             setError("Please login before starting a mock interview.");
-            onShowAuth?.();
+            navigate('/auth');
             return;
         }
         setError("");
@@ -92,7 +95,7 @@ function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
                 localStorage.removeItem("prepwise-auth");
                 dispatch(setUserData(null));
                 setError("Your session expired. Please login again.");
-                onShowAuth?.();
+                navigate('/auth');
             } else {
                 setError(error.response?.data?.message || "Unable to start interview. Please try again.");
             }
@@ -112,7 +115,7 @@ function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
                     initial={{ x: -80, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ duration: 0.7 }}
-                    className='relative bg-gradient-to-br from-green-50 to-green-100 p-12 flex flex-col justify-center'>
+                    className='relative bg-linear-to-br from-green-50 to-green-100 p-12 flex flex-col justify-center'>
 
                     <h2 className="text-4xl font-bold text-gray-800 mb-6">
                         Start Your AI Interview
@@ -290,7 +293,7 @@ function Step1SetUp({ onStart, onShowAuth, initialMode = "Technical" }) {
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.95 }}
                             className='w-full disabled:bg-gray-600 bg-green-600 hover:bg-green-700 text-white py-3 rounded-full text-lg font-semibold transition duration-300 shadow-md'>
-                            {loading ? "Staring...":"Start Interview"}
+                            {loading ? "Starting...":"Start Interview"}
 
 
                         </motion.button>
