@@ -14,7 +14,7 @@ import Layout from './components/Layout'
 import BehaviouralQuestions from './pages/BehaviouralQuestions'
 import About from './pages/About'
 
-export const ServerUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+export const ServerUrl = import.meta.env.VITE_API_URL?.replace(/\/+$|\/$/, '') || 'http://localhost:8000'
 
 const PageLoader = () => (
   <div className='flex min-h-screen items-center justify-center bg-slate-50 text-slate-600'>

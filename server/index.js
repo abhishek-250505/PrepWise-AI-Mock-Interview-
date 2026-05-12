@@ -11,7 +11,11 @@ import paymentRouter from "./routes/payment.route.js"
 import aptitudeRouter from "./routes/aptitude.route.js"
 
 const app = express()
-const allowedOrigins ="http://localhost:5173"
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://prepwiseai-tau.vercel.app",
+    "https://prepwise-ai-mock-interview.onrender.com"
+]
 
 app.use(cors({
     origin: (origin, callback) => {
