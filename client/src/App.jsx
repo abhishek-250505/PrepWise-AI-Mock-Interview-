@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Auth from './pages/Auths'
 import axios from 'axios'
@@ -14,7 +14,7 @@ import Layout from './components/Layout'
 import BehaviouralQuestions from './pages/BehaviouralQuestions'
 import About from './pages/About'
 
-export const ServerUrl = `http://localhost:8000`
+export const ServerUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 
 const PageLoader = () => (
   <div className='flex min-h-screen items-center justify-center bg-slate-50 text-slate-600'>
@@ -27,6 +27,7 @@ function App() {
   const dispatch = useDispatch()
   const { userData } = useSelector((state) => state.user)
   const [authLoading, setAuthLoading] = useState(true)
+  const location = useLocation()
 
   useEffect(()=>{
     const getUser = async () => {
@@ -55,7 +56,7 @@ function App() {
 
   const protectedPage = (children) => {
     if (authLoading) return <PageLoader />
-    if (!userData) return <Navigate to='/auth' replace />
+    if (!userData) return <Navigate to='/auth' replace state={{ from: location.pathname }} />
     return <Layout>{children}</Layout>
   }
 
@@ -63,12 +64,12 @@ function App() {
     <>
       <Routes>
         <Route path='/auth' element={authLoading ? <PageLoader /> : userData ? <Navigate to='/' replace /> : <Auth/>}/>
-        <Route path='/' element={protectedPage(<Home/>)} />
+        <Route path='/' element={<Layout><Home/></Layout>} />
         <Route path='/interview' element={protectedPage(<InterviewPage/>)} />
         <Route path='/hr-interview' element={protectedPage(<InterviewPage initialMode="HR"/>)} />
         <Route path='/behavioural-interview' element={protectedPage(<BehaviouralQuestions/>)} />
         <Route path='/aptitude' element={protectedPage(<AptitudePage/>)} />
-        <Route path='/about' element={protectedPage(<About/>)} />
+        <Route path='/about' element={<Layout><About/></Layout>} />
         <Route path='/history' element={protectedPage(<InterviewHistory/>)} />
         <Route path='/pricing' element={protectedPage(<Pricing/>)} />
         <Route path='/report/:id' element={protectedPage(<InterviewReport/>)} />

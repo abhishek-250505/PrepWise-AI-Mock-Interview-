@@ -9,7 +9,8 @@ import { setUserData } from '../redux/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-function Auths() {
+import { FaTimes } from "react-icons/fa";
+function Auths({ isModel = false, onClose }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user.userData)
@@ -79,7 +80,17 @@ function Auths() {
             </div>
           </div>
 
-          <div className='w-full  bg-white rounded-[40px] border mt-5 border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.08)] p-8 sm:p-10'>
+          <div className='relative w-full  bg-white rounded-[40px] border mt-5 border-slate-200 shadow-[0_30px_90px_rgba(15,23,42,0.08)] p-8 sm:p-10'>
+            <button
+              type='button'
+              onClick={() => {
+                if (onClose) return onClose()
+                navigate('/')
+              }}
+              className='absolute top-4 right-4 text-gray-800 hover:text-black text-xl z-10'
+            >
+              <FaTimes size={18} />
+            </button>
             <div className='flex flex-col items-center gap-3'>
               <div className='inline-flex h-12 w-12 items-center justify-center rounded-3xl bg-[#5937F7] text-xl font-bold text-white'>PW</div>
               <div className='flex items-center gap-3 rounded-full bg-slate-100 px-3 py-2'>

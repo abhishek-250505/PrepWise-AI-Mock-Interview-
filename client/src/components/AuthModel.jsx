@@ -22,7 +22,7 @@ function AuthModel({onClose}) {
           <button onClick={onClose} className='absolute top-4 right-4 text-gray-800 hover:text-black text-xl z-10'>
             <FaTimes size={18} />
           </button>
-          <Auth isModel={true} />
+          <Auth isModel={true} onClose={onClose} />
         </div>
       </div>
     </div>,
