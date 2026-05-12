@@ -1,10 +1,8 @@
 # PrepWise AI
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge)](https://prepwiseai-tau.vercel.app)
-
 PrepWise AI is an AI-powered mock interview platform designed to help users prepare for real-world interviews by generating personalized questions based on their resume. Unlike generic platforms, it analyzes your skills, projects, and experience to create tailored technical, HR, and behavioral questions, providing instant feedback and scoring for a realistic practice experience.
 
-## 🚀 Features
+##  Features
 
 - **Resume-Based Question Generation**: Upload your PDF resume to generate personalized interview questions.
 - **Multiple Interview Types**: Technical, HR, and Behavioral mock interviews with AI-driven questions.
@@ -39,64 +37,6 @@ PrepWise AI is an AI-powered mock interview platform designed to help users prep
 - **Razorpay** - Payment gateway
 - **Firebase Auth** - User authentication
 
-## 📦 Installation
-
-### Prerequisites
-- Node.js (v16 or higher)
-- MongoDB (local or cloud instance)
-- Firebase project setup
-- Razorpay account
-
-### Setup Instructions
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/abhishek-250505/PrepWise-AI-Mock-Interview.git
-   cd PrepWise-AI-Mock-Interview
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   # Backend
-   cd server
-   npm install
-
-   # Frontend
-   cd ../client
-   npm install
-   ```
-
-3. **Environment Variables**:
-   - Create `.env` files in both `server/` and `client/` directories.
-   - Backend `.env`:
-     ```
-     PORT=8000
-     MONGODB_URL=your_mongodb_connection_string
-     JWT_SECRET=your_jwt_secret
-     OPENROUTER_API_KEY=your_openrouter_api_key
-     RAZORPAY_KEY_ID=your_razorpay_key_id
-     RAZORPAY_KEY_SECRET=your_razorpay_key_secret
-     ```
-   - Frontend `.env`:
-     ```
-     VITE_API_URL=http://localhost:8000
-     VITE_FIREBASE_APIKEY=your_firebase_api_key
-     VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
-     ```
-
-4. **Run the application**:
-   ```bash
-   # Backend (from server/)
-   npm run dev
-
-   # Frontend (from client/)
-   npm run dev
-   ```
-
-5. **Access the app**:
-   - Frontend: `http://localhost:5173`
-   - Backend: `http://localhost:8000`
-
 ## 📖 Usage
 
 1. **Sign Up/Login**: Create an account or sign in with Google.
@@ -115,9 +55,6 @@ PrepWise AI is an AI-powered mock interview platform designed to help users prep
 5. **Evaluation**: AI analyzes responses and provides feedback/scoring.
 6. **Reporting**: Results are stored and presented in downloadable reports.
 
-## 📸 Screenshots
-
-*(Add screenshots here if available)*
 
 ## 🤝 Contributing
 
@@ -129,14 +66,7 @@ Contributions are welcome! Please follow these steps:
 4. Push to the branch: `git push origin feature/your-feature`.
 5. Open a Pull Request.
 
-## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📧 Contact
-
-For questions or feedback, reach out to [abhishek-250505](https://github.com/abhishek-250505).
-
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Now-blue?style=for-the-badge)](https://prepwiseai-tau.vercel.app)
 ---
 
-Built with ❤️ using React, Node.js, and AI.
